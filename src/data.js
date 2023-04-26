@@ -67,7 +67,7 @@ export const data = [
   },
 ];
 
-export const money = [
+export const moneyData = [
   { id: 1, amount: 100 },
   { id: 2, amount: 200 },
   { id: 3, amount: 300 },

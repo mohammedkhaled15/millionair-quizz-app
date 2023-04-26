@@ -11,14 +11,16 @@ export default {
         correct: {
           "0%,22%,42%": { background: "mediumblue" },
           "20%,40%,60%": {
-            background: "linear-gradient(#0e0124,#22074d)",
+            "background-image":
+              "linear-gradient(rgb(14, 1, 36),rgb(34, 7, 77))",
           },
           "62%,100%": { background: "green" },
         },
         wrong: {
           "0%,22%,42%": { background: "mediumblue" },
           "20%,40%,60%": {
-            background: "linear-gradient(#0e0124,#22074d)",
+            "background-image":
+              "linear-gradient(rgb(14, 1, 36),rgb(34, 7, 77))",
           },
           "62%,100%": { background: "crimson" },
         },

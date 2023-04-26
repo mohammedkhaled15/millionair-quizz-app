@@ -6,7 +6,10 @@
   .active {
     @apply bg-teal-400;
   }
+  .selected {
+    @apply w-2/5 cursor-pointer rounded-xl border-2 border-solid border-white  bg-[mediumblue] p-2 text-center text-lg font-light;
+  }
   .answer {
-    @apply w-2/5 rounded-xl border-2 border-solid border-white bg-gradient-to-t from-[#0e0124] to-[#22074d] p-2 text-center text-lg font-light hover:from-[mediumblue] hover:to-[mediumblue];
+    @apply w-2/5 cursor-pointer rounded-xl border-2 border-solid border-white bg-gradient-to-t from-[#0e0124] to-[#22074d] p-2 text-center text-lg font-light hover:from-[mediumblue] hover:to-[mediumblue];
   }
 }
