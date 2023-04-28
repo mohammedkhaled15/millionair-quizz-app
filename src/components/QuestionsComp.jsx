@@ -23,9 +23,9 @@ const QuestionsComp = () => {
   const [correctAnswer] = useSound(correct);
   const [wrongAnswer] = useSound(wrong);
 
-  // useEffect(() => {
-  //   letsPlay();
-  // }, [letsPlay]);
+  useEffect(() => {
+    letsPlay();
+  }, [letsPlay]);
 
   useEffect(() => {
     setQuestion(data[questionNumber - 1]);
