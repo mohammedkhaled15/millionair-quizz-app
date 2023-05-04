@@ -8,26 +8,20 @@ import Start from "./components/Start";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from 'i18next-browser-languagedetector';
+import HttpApi from 'i18next-http-backend';
 
 i18n
   .use(initReactI18next)
   .use(LanguageDetector)
+  .use(HttpApi)
   .init({
-    resources: {
-      en: {
-        translation: {
-          "Welcome to React": "Welcome to React and react-i18next"
-        }
-      },
-      ar: {
-        translation: {
-          "Welcome to React": "مرحبًا بكم ي ريأكت"
-        }
-      },
-    },
     fallbackLng: "en",
     detection: {
       order: ['htmlTag', 'cookie', 'localStorage', 'sessionStorage', 'path', 'subdomain'],
+      caches: ["cookie"]
+    },
+    backend: {
+      loadPath: '/assets/locales/{{lng}}/translation.json',
     }
   });
 
@@ -38,7 +32,7 @@ function App() {
   const [startGame, setStartGame] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   const [timefinish, setTimefinish] = useState(false);
-  const [questionNumber, setQuestionNumber] = useState(1);
+  const [questionNumber, setQuestionNumber] = useState(2);
   const [earned, setEarned] = useState("$ 0");
   const money = useMemo(() => moneyData, []);
 

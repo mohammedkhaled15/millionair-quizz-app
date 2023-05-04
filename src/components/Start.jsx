@@ -50,7 +50,7 @@ const Start = () => {
                 id="en"
                 className="mx-8"
                 onChange={handleChange} />
-              <label htmlFor="ar" className="text-xl font-semibold">Arabic</label>
+              <label htmlFor="ar" className="text-xl font-semibold">العربية</label>
               <input
                 type="radio"
                 name="lang"

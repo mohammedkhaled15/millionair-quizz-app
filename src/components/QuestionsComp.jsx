@@ -1,9 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../App";
+import { useTransition } from "react";
 import useSound from "use-sound";
 import play from "../assets/sounds/play.mp3";
 import correct from "../assets/sounds/correct.mp3";
 import wrong from "../assets/sounds/wrong.mp3";
+import { useTranslation } from "react-i18next";
 
 const QuestionsComp = () => {
   const {
@@ -67,23 +69,27 @@ const QuestionsComp = () => {
     });
   };
 
+  const { t } = useTranslation()
+
   return (
     <div className="main flex h-full flex-col items-center justify-around ">
       <div className="quest  w-[80%] rounded-xl  border-2 border-solid border-white bg-[linear-gradient(#100241,black)] p-4 text-center">
-        {question?.question}
+        {t(`question_${questionNumber}`)}
       </div>
       <div className="flex w-full flex-wrap justify-center gap-2">
-        {question?.answers.map((answer) => {
-          return (
-            <div
-              key={answer.text}
-              className={`${selectedAnswer === answer ? classes : "answer"}`}
-              onClick={() => handleClick(answer)}
-            >
-              {answer.text}
-            </div>
-          );
-        })}
+        {
+          question?.answers.map((answer, index) => {
+            return (
+              <div
+                key={answer.text}
+                className={`${selectedAnswer === answer ? classes : "answer"}`}
+                onClick={() => handleClick(answer)}
+              >
+                {t(`answers_${questionNumber}_${index + 1}`)}
+              </div>
+            )
+          })
+        }
       </div>
     </div>
   );
