@@ -15,9 +15,10 @@ i18n
   .use(LanguageDetector)
   .use(HttpApi)
   .init({
+    supportedLngs: ["en", "ar"],
     fallbackLng: "en",
     detection: {
-      order: ['htmlTag', 'cookie', 'localStorage', 'sessionStorage', 'path', 'subdomain'],
+      order: ['cookie', 'htmlTag', 'localStorage', 'sessionStorage', 'path', 'subdomain'],
       caches: ["cookie"]
     },
     backend: {
@@ -28,7 +29,7 @@ i18n
 export const AppContext = createContext();
 
 function App() {
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState({ username: "", password: "" });
   const [startGame, setStartGame] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   const [timefinish, setTimefinish] = useState(false);
@@ -39,8 +40,8 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        username,
-        setUsername,
+        user,
+        setUser,
         activeStage,
         setActiveStage,
         timefinish,

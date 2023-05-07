@@ -30,7 +30,7 @@ const Scoreboard = ({ setShowScoreboard }) => {
         params.api.getRowIndexRelativeToVisibleRows(params.row.id) + 1
       }
     },
-    { field: 'name', headerName: 'Player Name', width: 250 },
+    { field: 'username', headerName: 'Player Name', width: 250 },
     { field: 'topScore', headerName: 'Top Score', width: 150 },
     { field: 'updatedAt', headerName: 'Date Of Top Score', width: 250 },
   ];
@@ -48,7 +48,7 @@ const Scoreboard = ({ setShowScoreboard }) => {
           sx={{ color: "white" }}
           rows={userData}
           columns={columns}
-          getRowId={(row) => row?.name} />
+          getRowId={(row) => row?.username} />
 
       </div>
     </div>
