@@ -20,38 +20,47 @@ const QuestionsComp = () => {
     setPause
   } = useContext(AppContext);
 
+  //initiating states
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [classes, setClasses] = useState("answer");
+
+  //sounds variables
   const [letsPlay] = useSound(play);
   const [correctAnswer] = useSound(correct);
   const [wrongAnswer] = useSound(wrong);
   const [waitSound] = useSound(wait);
 
+  //handling starting sound
   useEffect(() => {
     letsPlay();
   }, [letsPlay]);
 
+  //handling waiting sound
   useEffect(() => {
     delay(3000, () => waitSound())
     setInterval(() => { waitSound() }, 160000)
   }, [waitSound])
 
+  //handling changing questions according to question number
   useEffect(() => {
     setQuestion(data[questionNumber - 1]);
   }, [data, questionNumber]);
 
+  //custom function to manipulate sounds
   const delay = (duration, callback) => {
     setTimeout(() => {
       callback();
     }, duration);
   };
 
+  //handling earned money according to question number
   useEffect(() => {
     questionNumber > 1 &&
       setEarned(money.find((m) => m.id === questionNumber - 1).amount);
   }, [questionNumber, money, setEarned]);
 
+  //handling choosing any answer
   const handleClick = (answer) => {
     setSelectedAnswer(answer);
     setPause(true)
