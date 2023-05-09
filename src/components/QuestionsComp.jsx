@@ -1,61 +1,116 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { AppContext } from "../App";
-import { useTransition } from "react";
 import useSound from "use-sound";
 import play from "../assets/sounds/play.mp3";
 import correct from "../assets/sounds/correct.mp3";
 import wrong from "../assets/sounds/wrong.mp3";
+import wait from "../assets/sounds/wait.mp3";
 import { useTranslation } from "react-i18next";
+import { privateRequest } from "../requests/axios";
 
 const QuestionsComp = () => {
   const {
     data,
     setTimefinish,
+    timefinish,
     questionNumber,
     setQuestionNumber,
     setEarned,
     money,
     setActiveStage,
+    setPause,
+    user,
+    earned
   } = useContext(AppContext);
 
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [classes, setClasses] = useState("answer");
-  const [letsPlay] = useSound(play);
-  const [correctAnswer] = useSound(correct);
-  const [wrongAnswer] = useSound(wrong);
+  const [answerSelected, setAnswerSelected] = useState(false);
+  const [highestEarned, setHighestEarned] = useState(0)
 
+  //sounds
+  const [letsPlay] = useSound(play, { interrupt: true });
+  const [correctAnswer] = useSound(correct, { interrupt: true });
+  const [wrongAnswer] = useSound(wrong);
+  const [waitSound] = useSound(wait);
+
+  // get the high score for the current user to minmize requests to change the score if
+  //current score exceded the highrst score
+  useEffect(() => {
+    const getEarnedForUser = async (x) => {
+      try {
+        const res = await privateRequest.post("/score", { username: x })
+        setHighestEarned(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    user && getEarnedForUser(user.username)
+  }, [user, user.username])
+
+  //activating starting sound
   useEffect(() => {
     letsPlay();
-  }, [letsPlay]);
+  }, [letsPlay])
 
+  // activating waiting sound
+  useEffect(() => {
+    delay(3000, () => waitSound())
+    setInterval(() => waitSound(), 160000)
+  }, [waitSound]);
+
+  //change question according to changes in question number
   useEffect(() => {
     setQuestion(data[questionNumber - 1]);
   }, [data, questionNumber]);
 
+  //custom function to use with sound files
   const delay = (duration, callback) => {
     setTimeout(() => {
       callback();
     }, duration);
   };
 
+  // update earned money with each correct answer
   useEffect(() => {
     questionNumber > 1 &&
       setEarned(money.find((m) => m.id === questionNumber - 1).amount);
   }, [questionNumber, money, setEarned]);
 
-  const handleClick = (answer) => {
+  useEffect(() => {
+    const updateScore = async () => {
+      console.log(timefinish, earned, highestEarned)
+      if (timefinish && (earned > highestEarned)) {
+        console.log(`earned: ${earned}, highestearned: ${highestEarned}`)
+        await privateRequest.post("/update", { username: user.username, score: earned })
+      }
+    }
+    updateScore()
+  }, [earned, highestEarned, timefinish, user.username])
+
+  useEffect(() => {
+
+  }, [timefinish])
+
+  //handling choosing an answer
+  const handleClick = async (answer) => {
+    setAnswerSelected(true)
     setSelectedAnswer(answer);
+    setPause(true)
     setClasses("selected");
     delay(3000, () =>
       setClasses(
         answer.correct ? "animate-correct answer" : "animate-wrong answer"
       )
     );
+    if (!answer.correct && earned > highestEarned) await privateRequest.post("/update", { username: user.username, score: earned })
     delay(5000, () => {
       if (answer.correct) {
         correctAnswer();
+        setPause(false)
         delay(1000, () => {
+          setAnswerSelected(false)
           setQuestionNumber((prev) => prev + 1);
           setSelectedAnswer(null);
           setActiveStage((prev) => prev + 1);
@@ -80,13 +135,14 @@ const QuestionsComp = () => {
         {
           question?.answers.map((answer, index) => {
             return (
-              <div
+              <button
                 key={answer.text}
                 className={`${selectedAnswer === answer ? classes : "answer"}`}
                 onClick={() => handleClick(answer)}
+                disabled={answerSelected}
               >
                 {t(`answers_${questionNumber}_${index + 1}`)}
-              </div>
+              </button>
             )
           })
         }

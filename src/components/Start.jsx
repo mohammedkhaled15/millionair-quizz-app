@@ -19,7 +19,7 @@ const Start = () => {
     try {
       await privateRequest.post("/login", { username: user.username, password: user.password })
       setStartGame(true)
-      setUser({ username: "", password: "" })
+      setUser(prev => { return { ...prev, password: "" } })
     } catch (error) {
       console.log(error)
       setReturnedMsg(error?.response?.data?.msg)
@@ -32,6 +32,7 @@ const Start = () => {
 
   const handleChange = (e) => {
     setLang(e.target.value)
+    console.log(e.target.value)
     i18next.changeLanguage(e.target.value)
   }
 
