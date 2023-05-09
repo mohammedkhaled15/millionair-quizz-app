@@ -17,6 +17,7 @@ const QuestionsComp = () => {
     setEarned,
     money,
     setActiveStage,
+    setPause
   } = useContext(AppContext);
 
   const [question, setQuestion] = useState(null);
@@ -53,6 +54,7 @@ const QuestionsComp = () => {
 
   const handleClick = (answer) => {
     setSelectedAnswer(answer);
+    setPause(true)
     setClasses("selected");
     delay(3000, () =>
       setClasses(
@@ -63,6 +65,7 @@ const QuestionsComp = () => {
       if (answer.correct) {
         correctAnswer();
         delay(1000, () => {
+          setPause(false)
           setQuestionNumber((prev) => prev + 1);
           setSelectedAnswer(null);
           setActiveStage((prev) => prev + 1);

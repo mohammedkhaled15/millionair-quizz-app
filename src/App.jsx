@@ -33,6 +33,7 @@ function App() {
   const [startGame, setStartGame] = useState(false);
   const [activeStage, setActiveStage] = useState(0);
   const [timefinish, setTimefinish] = useState(false);
+  const [pause, setPause] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(2);
   const [earned, setEarned] = useState("$ 0");
   const money = useMemo(() => moneyData, []);
@@ -40,19 +41,15 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        user,
-        setUser,
-        activeStage,
-        setActiveStage,
-        timefinish,
-        setTimefinish,
+        user, setUser,
+        activeStage, setActiveStage,
+        timefinish, setTimefinish,
         data,
         money,
-        questionNumber,
-        setQuestionNumber,
-        earned,
-        setEarned,
-        setStartGame
+        questionNumber, setQuestionNumber,
+        earned, setEarned,
+        setStartGame,
+        pause, setPause
       }}
     >
       <div className="flex h-screen bg-[#020230] text-white">

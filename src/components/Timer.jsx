@@ -2,19 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../App";
 
 const Timer = () => {
-  const { setTimefinish, questionNumber } = useContext(AppContext);
-  const [timer, setTimer] = useState(30);
+  const { setTimefinish, questionNumber, pause } = useContext(AppContext);
+  const [timer, setTimer] = useState(8);
 
   useEffect(() => {
     if (timer === 0) return setTimefinish(true);
     const interval = setInterval(() => {
       setTimer((prev) => prev - 1);
     }, 1000);
+    if (pause) clearInterval(interval)
     return () => clearInterval(interval);
-  }, [timer, setTimefinish]);
+  }, [timer, setTimefinish, pause]);
+
 
   useEffect(() => {
-    setTimer(30);
+    setTimer(8);
   }, [questionNumber]);
 
   return (
