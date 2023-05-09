@@ -52,11 +52,7 @@ function App() {
         setEarned,
         setStartGame,
         pause,
-        setPause
-        questionNumber, setQuestionNumber,
-        earned, setEarned,
-        setStartGame,
-        pause, setPause
+        setPause,
       }}
     >
       <div className="flex h-screen bg-[#020230] text-white">

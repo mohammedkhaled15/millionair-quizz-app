@@ -4,8 +4,9 @@ import wrong from "../assets/sounds/wrong.mp3"
 import useSound from "use-sound";
 
 const Timer = () => {
-  const { setTimefinish, questionNumber } = useContext(AppContext);
-  const [timer, setTimer] = useState(30);
+  const { setTimefinish, questionNumber, pause } = useContext(AppContext);
+  const [timer, setTimer] = useState(5);
+  const [wrongAnswer] = useSound(wrong)
 
   useEffect(() => {
     if (timer === 0) {
@@ -17,11 +18,10 @@ const Timer = () => {
     }, 1000);
     if (pause) clearInterval(interval)
     return () => clearInterval(interval);
-  }, [timer, setTimefinish]);
-
+  }, [timer, setTimefinish, wrongAnswer, pause]);
 
   useEffect(() => {
-    setTimer(30);
+    setTimer(5);
   }, [questionNumber]);
 
   return (
