@@ -34,8 +34,8 @@ function App() {
   const [activeStage, setActiveStage] = useState(0);
   const [timefinish, setTimefinish] = useState(false);
   const [pause, setPause] = useState(false);
-  const [questionNumber, setQuestionNumber] = useState(2);
-  const [earned, setEarned] = useState("$ 0");
+  const [questionNumber, setQuestionNumber] = useState(1);
+  const [earned, setEarned] = useState("0");
   const money = useMemo(() => moneyData, []);
 
   return (
