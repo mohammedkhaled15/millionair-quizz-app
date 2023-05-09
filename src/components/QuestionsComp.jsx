@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../App";
-import { useTransition } from "react";
 import useSound from "use-sound";
 import play from "../assets/sounds/play.mp3";
 import correct from "../assets/sounds/correct.mp3";
@@ -24,6 +23,7 @@ const QuestionsComp = () => {
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [classes, setClasses] = useState("answer");
+  const [answerSelected, setAnswerSelected] = useState(false)
 
   //sounds variables
   const [letsPlay] = useSound(play);
@@ -62,6 +62,7 @@ const QuestionsComp = () => {
 
   //handling choosing any answer
   const handleClick = (answer) => {
+    setAnswerSelected(true)
     setSelectedAnswer(answer);
     setPause(true)
     setClasses("selected");
@@ -99,13 +100,14 @@ const QuestionsComp = () => {
         {
           question?.answers.map((answer, index) => {
             return (
-              <div
+              <button
                 key={answer.text}
                 className={`${selectedAnswer === answer ? classes : "answer"}`}
                 onClick={() => handleClick(answer)}
+                disabled={answerSelected}
               >
                 {t(`answers_${questionNumber}_${index + 1}`)}
-              </div>
+              </button>
             )
           })
         }
