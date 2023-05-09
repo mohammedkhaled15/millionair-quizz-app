@@ -41,12 +41,9 @@ function App() {
   return (
     <AppContext.Provider
       value={{
-        user,
-        setUser,
-        activeStage,
-        setActiveStage,
-        timefinish,
-        setTimefinish,
+        user, setUser,
+        activeStage, setActiveStage,
+        timefinish, setTimefinish,
         data,
         money,
         questionNumber,
@@ -56,6 +53,10 @@ function App() {
         setStartGame,
         pause,
         setPause
+        questionNumber, setQuestionNumber,
+        earned, setEarned,
+        setStartGame,
+        pause, setPause
       }}
     >
       <div className="flex h-screen bg-[#020230] text-white">

@@ -4,7 +4,6 @@ import useSound from "use-sound";
 import play from "../assets/sounds/play.mp3";
 import correct from "../assets/sounds/correct.mp3";
 import wrong from "../assets/sounds/wrong.mp3";
-import wait from "../assets/sounds/wait.mp3";
 import { useTranslation } from "react-i18next";
 import { privateRequest } from "../requests/axios";
 
@@ -23,6 +22,7 @@ const QuestionsComp = () => {
     earned
   } = useContext(AppContext);
 
+  //initiating states
   const [question, setQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [classes, setClasses] = useState("answer");
