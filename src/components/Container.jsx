@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import useSound from "use-sound";
 import { AppContext } from "../App";
 import wrong from "../assets/sounds/wrong.mp3";
+import { privateRequest } from "../requests/axios";
 
 
 const Container = () => {
@@ -11,6 +12,14 @@ const Container = () => {
 
   const [wrongAnswer] = useSound(wrong);
 
+  useEffect(() => {
+    const updateScore = async () => {
+      if (timefinish && (earned > user.topScore)) {
+        await privateRequest.post("/update", { username: user.username, score: earned })
+      }
+    }
+    updateScore()
+  }, [earned, timefinish, user.topScore, user.username])
 
   useEffect(() => {
     timefinish ? wrongAnswer() : null

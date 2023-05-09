@@ -17,9 +17,9 @@ const Start = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      await privateRequest.post("/login", { username: user.username, password: user.password })
+      const res = await privateRequest.post("/login", { username: user.username, password: user.password })
       setStartGame(true)
-      setUser(prev => { return { ...prev, password: "" } })
+      setUser(res.data)
     } catch (error) {
       console.log(error)
       setReturnedMsg(error?.response?.data?.msg)

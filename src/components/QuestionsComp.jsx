@@ -36,20 +36,6 @@ const QuestionsComp = () => {
   const [wrongAnswer] = useSound(wrong);
   const [waitSound] = useSound(wait);
 
-  // get the high score for the current user to minmize requests to change the score if
-  //current score exceded the highrst score
-  useEffect(() => {
-    const getEarnedForUser = async (x) => {
-      try {
-        const res = await privateRequest.post("/score", { username: x })
-        setHighestEarned(res.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    user && getEarnedForUser(user.username)
-  }, [user, user.username])
-
   //activating starting sound
   useEffect(() => {
     letsPlay();
@@ -79,21 +65,6 @@ const QuestionsComp = () => {
       setEarned(money.find((m) => m.id === questionNumber - 1).amount);
   }, [questionNumber, money, setEarned]);
 
-  useEffect(() => {
-    const updateScore = async () => {
-      console.log(timefinish, earned, highestEarned)
-      if (timefinish && (earned > highestEarned)) {
-        console.log(`earned: ${earned}, highestearned: ${highestEarned}`)
-        await privateRequest.post("/update", { username: user.username, score: earned })
-      }
-    }
-    updateScore()
-  }, [earned, highestEarned, timefinish, user.username])
-
-  useEffect(() => {
-
-  }, [timefinish])
-
   //handling choosing an answer
   const handleClick = async (answer) => {
     setAnswerSelected(true)
@@ -105,7 +76,7 @@ const QuestionsComp = () => {
         answer.correct ? "animate-correct answer" : "animate-wrong answer"
       )
     );
-    if (!answer.correct && earned > highestEarned) await privateRequest.post("/update", { username: user.username, score: earned })
+    if (!answer.correct && earned > user.topScore) await privateRequest.post("/update", { username: user.username, score: earned })
     delay(5000, () => {
       if (answer.correct) {
         correctAnswer();
