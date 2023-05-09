@@ -5,6 +5,7 @@ import useSound from "use-sound";
 import play from "../assets/sounds/play.mp3";
 import correct from "../assets/sounds/correct.mp3";
 import wrong from "../assets/sounds/wrong.mp3";
+import wait from "../assets/sounds/wait.mp3";
 import { useTranslation } from "react-i18next";
 
 const QuestionsComp = () => {
@@ -24,10 +25,16 @@ const QuestionsComp = () => {
   const [letsPlay] = useSound(play);
   const [correctAnswer] = useSound(correct);
   const [wrongAnswer] = useSound(wrong);
+  const [waitSound] = useSound(wait);
 
   useEffect(() => {
     letsPlay();
   }, [letsPlay]);
+
+  useEffect(() => {
+    delay(3000, () => waitSound())
+    setInterval(() => { waitSound() }, 160000)
+  }, [waitSound])
 
   useEffect(() => {
     setQuestion(data[questionNumber - 1]);
