@@ -32,7 +32,7 @@ const Container = () => {
   return (
     <div className="flex w-3/4 flex-col bg-hero-image bg-center">
       {
-        questionNumber === 16 ? <Winner waitSound={waitSound} stopWaiting={stop} /> :
+        questionNumber === 16 ? <Winner stopWaiting={stop} /> :
           <>
             {<h1><b>Player Name: </b>{user?.username?.toUpperCase()}</h1>}
             {timefinish ? (
