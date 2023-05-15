@@ -7,6 +7,7 @@ export const privateRequest = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "true",
   },
   withCredentials: true,
 });
