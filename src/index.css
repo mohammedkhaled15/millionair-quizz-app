@@ -16,3 +16,8 @@
     @apply w-2/5 cursor-default rounded-xl border-2 border-solid border-white bg-gradient-to-t from-[#0e0124] to-[#22074d] p-2 text-center text-lg font-light;
   }
 }
+.winner {
+  background: -webkit-linear-gradient(#fae209, #465206);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

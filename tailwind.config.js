@@ -24,6 +24,17 @@ export default {
           },
           "62%,100%": { background: "crimson" },
         },
+        pulsate:{
+          "0%": {
+            transform: "scale(0.95)"
+          },
+          "70%": {
+            transform: "scale(1)"
+          },
+          "100%": {
+            transform: "scale(0.95)"
+          }
+        }
       },
       animation: {
         correct: "correct ease 3s forwards",

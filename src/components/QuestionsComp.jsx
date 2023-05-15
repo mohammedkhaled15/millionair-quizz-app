@@ -4,15 +4,14 @@ import useSound from "use-sound";
 import play from "../assets/sounds/play.mp3";
 import correct from "../assets/sounds/correct.mp3";
 import wrong from "../assets/sounds/wrong.mp3";
-import wait from "../assets/sounds/wait.mp3";
+// import wait from "../assets/sounds/wait.mp3";
 import { useTranslation } from "react-i18next";
 import { privateRequest } from "../requests/axios";
 
-const QuestionsComp = () => {
+const QuestionsComp = ({ waitSound, stopWaiting }) => {
   const {
     data,
     setTimefinish,
-    timefinish,
     questionNumber,
     setQuestionNumber,
     setEarned,
@@ -28,13 +27,12 @@ const QuestionsComp = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [classes, setClasses] = useState("answer");
   const [answerSelected, setAnswerSelected] = useState(false);
-  const [highestEarned, setHighestEarned] = useState(0)
 
   //sounds
   const [letsPlay] = useSound(play, { interrupt: true });
   const [correctAnswer] = useSound(correct, { interrupt: true });
   const [wrongAnswer] = useSound(wrong);
-  const [waitSound] = useSound(wait);
+  // const [waitSound, { stopWaiting }] = useSound(wait);
 
   //activating starting sound
   useEffect(() => {
@@ -120,6 +118,8 @@ const QuestionsComp = () => {
         }
       </div>
     </div>
+
+
   );
 };
 
