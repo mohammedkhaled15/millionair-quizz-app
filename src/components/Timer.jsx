@@ -5,7 +5,7 @@ import useSound from "use-sound";
 
 const Timer = () => {
   const { setTimefinish, questionNumber, pause } = useContext(AppContext);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(30);
   const [wrongAnswer] = useSound(wrong)
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Timer = () => {
   }, [timer, setTimefinish, wrongAnswer, pause]);
 
   useEffect(() => {
-    setTimer(5);
+    setTimer(30);
   }, [questionNumber]);
 
   return (
